@@ -114,16 +114,14 @@
         const isCompleted = this.isDayCompleted(dayNumber);
 
         if (isCompleted) {
-          markDoneBtn.classList.add('bg-green-600', 'hover:bg-green-700', 'text-white');
+          markDoneBtn.classList.add('bg-green-600', 'hover:bg-green-700');
           markDoneBtn.classList.remove('bg-rose-600', 'hover:bg-rose-700');
         } else {
-          markDoneBtn.classList.remove('bg-green-600', 'hover:bg-green-700', 'text-white');
+          markDoneBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
           markDoneBtn.classList.add('bg-rose-600', 'hover:bg-rose-700');
         }
-        
-        markDoneBtn.innerHTML = isCompleted
-          ? '<svg class="w-5 h-5 mr-2" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"></path></svg>Completed!'
-          : '<svg class="w-5 h-5 mr-2" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"></path></svg>Mark as Done';
+
+        markDoneBtn.innerHTML = isCompleted ? 'Completed!' : 'Mark as Done';
       }
 
       // Update completion badge in header
@@ -137,17 +135,18 @@
     },
   };
 
-  // Initialize UI with minimal delay
+  // Initialize UI
   function initializeUI() {
     window.completionTracker.updateUI();
   }
-  
-  // Handle initial page load only
+
+  // Handle initial page load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeUI);
   } else {
-    // Run immediately if DOM is already ready
     initializeUI();
   }
-</script>
 
+  // Handle Astro page transitions
+  document.addEventListener('astro:after-swap', initializeUI);
+</script>

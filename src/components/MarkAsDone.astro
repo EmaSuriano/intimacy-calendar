@@ -16,10 +16,9 @@ const { dayNumber } = Astro.props;
     data-day-number={dayNumber}
     onclick={`window.completionTracker.toggleDayCompletion(${dayNumber})`}
   >
-    <Check class="w-5 h-5 mr-2" />
     Mark as Done
   </button>
-  
+
   <p class="text-sm text-gray-500 mt-2">
     Click to track your progress through the 30-day journey
   </p>
