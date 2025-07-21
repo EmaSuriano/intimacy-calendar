@@ -1,0 +1,228 @@
+---
+interface Props {
+  steps?: string[];
+  questions?: string[];
+  rules?: string[];
+  activities?: string[];
+  examples?: string[];
+  ideas?: string[];
+  success: string;
+}
+
+const { steps, questions, rules, activities, examples, ideas, success } = Astro.props;
+---
+
+<div class="space-y-6">
+  <!-- Steps -->
+  {
+    steps && (
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <svg
+            class="w-5 h-5 mr-2 text-rose-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+          Steps to Follow
+        </h3>
+        <ol class="space-y-3">
+          {steps.map((step, index) => (
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-6 h-6 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
+                {index + 1}
+              </span>
+              <span class="text-gray-700 text-sm">{step}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    )
+  }
+
+  <!-- Questions -->
+  {
+    questions && (
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <svg
+            class="w-5 h-5 mr-2 text-rose-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          Questions to Explore
+        </h3>
+        <ul class="space-y-2">
+          {questions.map((question) => (
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-2 h-2 bg-rose-400 rounded-full mr-3 mt-2" />
+              <span class="text-gray-700 text-sm">{question}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <!-- Rules -->
+  {
+    rules && (
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <svg
+            class="w-5 h-5 mr-2 text-rose-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          Important Rules
+        </h3>
+        <ul class="space-y-2">
+          {rules.map((rule) => (
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-2 h-2 bg-rose-400 rounded-full mr-3 mt-2" />
+              <span class="text-gray-700 text-sm">{rule}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <!-- Activities -->
+  {
+    activities && (
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <svg
+            class="w-5 h-5 mr-2 text-rose-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+          Activity Options
+        </h3>
+        <ul class="space-y-2">
+          {activities.map((activity) => (
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-2 h-2 bg-rose-400 rounded-full mr-3 mt-2" />
+              <span class="text-gray-700 text-sm">{activity}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <!-- Examples -->
+  {
+    examples && (
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <svg
+            class="w-5 h-5 mr-2 text-rose-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+            />
+          </svg>
+          Examples
+        </h3>
+        <ul class="space-y-2">
+          {examples.map((example) => (
+            <li class="bg-gray-50 p-3 rounded-lg text-sm text-gray-700 italic">
+              "{example}"
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <!-- Ideas -->
+  {
+    ideas && (
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <svg
+            class="w-5 h-5 mr-2 text-rose-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+            />
+          </svg>
+          Ideas & Suggestions
+        </h3>
+        <ul class="space-y-2">
+          {ideas.map((idea) => (
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-2 h-2 bg-rose-400 rounded-full mr-3 mt-2" />
+              <span class="text-gray-700 text-sm">{idea}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <!-- Success Indicator -->
+  <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl shadow-lg p-6 border border-green-200">
+    <h3 class="text-xl font-bold text-green-800 mb-4 flex items-center">
+      <svg
+        class="w-5 h-5 mr-2 text-green-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      Success Looks Like
+    </h3>
+    <p class="text-green-700 text-sm">{success}</p>
+  </div>
+</div>

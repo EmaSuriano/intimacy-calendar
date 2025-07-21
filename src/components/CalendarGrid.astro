@@ -1,0 +1,33 @@
+---
+import DayCard from './DayCard.astro';
+
+interface Day {
+  slug: string;
+  data: {
+    day: number;
+    title: string;
+    task: string;
+    timeRequired: string;
+    when: string;
+  };
+}
+
+interface Props {
+  days: Day[];
+}
+
+const { days } = Astro.props;
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+  {days.map((day) => (
+    <DayCard
+      day={day.data.day}
+      title={day.data.title}
+      task={day.data.task}
+      timeRequired={day.data.timeRequired}
+      when={day.data.when}
+      slug={day.slug}
+    />
+  ))}
+</div>

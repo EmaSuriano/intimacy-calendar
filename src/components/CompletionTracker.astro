@@ -1,0 +1,153 @@
+---
+// This component provides client-side localStorage functionality for tracking completed days
+---
+
+<script>
+  // Utility functions for managing completed days in localStorage
+  window.completionTracker = {
+    STORAGE_KEY: 'intimacy-calendar-completed',
+
+    // Get all completed days
+    getCompletedDays() {
+      try {
+        const stored = localStorage.getItem(this.STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (error) {
+        console.error('Error reading completed days from localStorage:', error);
+        return [];
+      }
+    },
+
+    // Check if a day is completed
+    isDayCompleted(dayNumber) {
+      const completed = this.getCompletedDays();
+      return completed.includes(dayNumber);
+    },
+
+    // Mark a day as completed
+    markDayCompleted(dayNumber) {
+      try {
+        const completed = this.getCompletedDays();
+        if (!completed.includes(dayNumber)) {
+          completed.push(dayNumber);
+          completed.sort((a, b) => a - b);
+          localStorage.setItem(this.STORAGE_KEY, JSON.stringify(completed));
+          this.updateUI();
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.error('Error saving completed day to localStorage:', error);
+        return false;
+      }
+    },
+
+    // Mark a day as not completed
+    markDayIncomplete(dayNumber) {
+      try {
+        const completed = this.getCompletedDays();
+        const index = completed.indexOf(dayNumber);
+        if (index > -1) {
+          completed.splice(index, 1);
+          localStorage.setItem(this.STORAGE_KEY, JSON.stringify(completed));
+          this.updateUI();
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.error('Error removing completed day from localStorage:', error);
+        return false;
+      }
+    },
+
+    // Toggle completion status
+    toggleDayCompletion(dayNumber) {
+      return this.isDayCompleted(dayNumber)
+        ? this.markDayIncomplete(dayNumber)
+        : this.markDayCompleted(dayNumber);
+    },
+
+    // Get completion statistics
+    getStats() {
+      const completed = this.getCompletedDays();
+      return {
+        completed: completed.length,
+        total: 30,
+        percentage: Math.round((completed.length / 30) * 100),
+      };
+    },
+
+    // Update UI elements with completion status
+    updateUI() {
+      // Update day cards in calendar
+      document.querySelectorAll('[data-day-card]').forEach((card) => {
+        const dayNumber = parseInt(card.dataset.dayCard);
+        const isCompleted = this.isDayCompleted(dayNumber);
+
+        // Toggle completed class
+        if (isCompleted) {
+          card.classList.add('ring-2', 'ring-green-400', 'bg-green-50');
+          // Apply opacity to day-card-content child
+          const content = card.querySelector('.day-card-content');
+          if (content) {
+            content.classList.add('opacity-75');
+          }
+        } else {
+          card.classList.remove('ring-2', 'ring-green-400', 'bg-green-50');
+          const content = card.querySelector('.day-card-content');
+          if (content) {
+            content.classList.remove('opacity-75');
+          }
+        }
+
+        // Update completion indicator
+        const indicator = card.querySelector('[data-completion-indicator]');
+        if (indicator) {
+          indicator.style.display = isCompleted ? 'block' : 'none';
+        }
+      });
+
+      // Update mark as done button
+      const markDoneBtn = document.querySelector('[data-mark-done-btn]');
+      if (markDoneBtn) {
+        const dayNumber = parseInt(markDoneBtn.dataset.dayNumber);
+        const isCompleted = this.isDayCompleted(dayNumber);
+
+        if (isCompleted) {
+          markDoneBtn.classList.add('bg-green-600', 'hover:bg-green-700', 'text-white');
+          markDoneBtn.classList.remove('bg-rose-600', 'hover:bg-rose-700');
+        } else {
+          markDoneBtn.classList.remove('bg-green-600', 'hover:bg-green-700', 'text-white');
+          markDoneBtn.classList.add('bg-rose-600', 'hover:bg-rose-700');
+        }
+        
+        markDoneBtn.innerHTML = isCompleted
+          ? '<svg class="w-5 h-5 mr-2" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"></path></svg>Completed!'
+          : '<svg class="w-5 h-5 mr-2" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"></path></svg>Mark as Done';
+      }
+
+      // Update completion badge in header
+      const completionBadge = document.querySelector('[data-completion-badge]');
+      if (completionBadge) {
+        const dayNumber = parseInt(completionBadge.dataset.dayNumber);
+        const isCompleted = this.isDayCompleted(dayNumber);
+
+        completionBadge.style.display = isCompleted ? 'inline-flex' : 'none';
+      }
+    },
+  };
+
+  // Initialize UI with minimal delay
+  function initializeUI() {
+    window.completionTracker.updateUI();
+  }
+  
+  // Handle initial page load only
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeUI);
+  } else {
+    // Run immediately if DOM is already ready
+    initializeUI();
+  }
+</script>
+

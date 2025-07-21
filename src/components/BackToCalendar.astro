@@ -1,0 +1,19 @@
+---
+import { ChevronLeft } from 'lucide-astro';
+
+interface Props {
+  href?: string;
+}
+
+const { href = "/intimacy-calendar/calendar" } = Astro.props;
+---
+
+<nav class="mb-8">
+  <a
+    href={href}
+    class="inline-flex items-center text-rose-600 hover:text-rose-700 transition-colors"
+  >
+    <ChevronLeft class="w-5 h-5 mr-2" />
+    Back to Calendar
+  </a>
+</nav>

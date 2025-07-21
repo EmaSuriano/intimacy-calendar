@@ -1,11 +1,49 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import CalendarHeader from '../components/CalendarHeader.astro';
+import HowToUse from '../components/HowToUse.astro';
+import CalendarGrid from '../components/CalendarGrid.astro';
+import CompletionTracker from '../components/CompletionTracker.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const allDays = await getCollection('days');
+const sortedDays = allDays.sort((a, b) => a.data.day - b.data.day);
+
+const howToSteps = [
+  {
+    iconName: "Calendar" as const,
+    title: "Daily Practice",
+    description: "Dedicate time each day to complete the suggested activity together."
+  },
+  {
+    iconName: "MessageCircle" as const,
+    title: "Open Communication",
+    description: "Create a safe space for honest, judgment-free conversations."
+  },
+  {
+    iconName: "Heart" as const,
+    title: "Build Connection",
+    description: "Focus on understanding, empathy, and deepening your bond."
+  }
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="30-Day Intimacy Calendar">
+  <main
+    class="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 py-8 px-4"
+  >
+    <div class="max-w-6xl mx-auto">
+      <CalendarHeader
+        title="30-Day Intimacy Calendar"
+        description="Transform your relationship with daily practices designed to deepen connection, improve communication, and build lasting intimacy."
+      />
+
+      <HowToUse steps={howToSteps} />
+
+      <CalendarGrid days={sortedDays} />
+    </div>
+  </main>
 </Layout>
+
+<CompletionTracker />
+

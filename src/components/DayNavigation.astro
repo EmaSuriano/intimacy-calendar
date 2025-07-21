@@ -1,0 +1,39 @@
+---
+import { ChevronLeft, ChevronRight } from 'lucide-astro';
+
+interface Props {
+  currentDay: number;
+}
+
+const { currentDay } = Astro.props;
+---
+
+<footer class="mt-12 flex justify-between items-center">
+  <div>
+    {
+      currentDay > 1 && (
+        <a
+          href={`/intimacy-calendar/day/day-${String(currentDay - 1).padStart(2, '0')}`}
+          class="inline-flex items-center px-6 py-3 bg-white text-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200"
+        >
+          <ChevronLeft class="w-5 h-5 mr-2" />
+          Previous Day
+        </a>
+      )
+    }
+  </div>
+
+  <div>
+    {
+      currentDay < 30 && (
+        <a
+          href={`/intimacy-calendar/day/day-${String(currentDay + 1).padStart(2, '0')}`}
+          class="inline-flex items-center px-6 py-3 bg-white text-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200"
+        >
+          Next Day
+          <ChevronRight class="w-5 h-5 ml-2" />
+        </a>
+      )
+    }
+  </div>
+</footer>

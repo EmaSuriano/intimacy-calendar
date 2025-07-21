@@ -1,0 +1,77 @@
+---
+import { Check, Clock } from 'lucide-astro';
+
+interface Props {
+  day: number;
+  title: string;
+  task: string;
+  timeRequired: string;
+  when: string;
+  slug: string;
+  href?: string;
+}
+
+const { day, title, task, timeRequired, when, slug, href } = Astro.props;
+const cardHref = href || `/intimacy-calendar/day/${slug}`;
+---
+
+<a
+  href={cardHref}
+  class="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 overflow-hidden relative"
+  data-day-card={day}
+>
+  <!-- Completion indicator -->
+  <div
+    class="absolute top-4 right-4 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center z-10 hidden"
+    data-completion-indicator
+  >
+    <Check class="w-5 h-5 m-1.5" />
+  </div>
+
+  <div class="p-6 day-card-content">
+    <div class="flex items-center justify-between mb-4">
+      <div
+        class="text-sm font-semibold text-rose-600 bg-rose-100 px-3 py-1 rounded-full"
+      >
+        Day {day}
+      </div>
+      <div class="text-xs text-gray-500">
+        {timeRequired}
+      </div>
+    </div>
+
+    <h3
+      class="text-lg font-bold text-gray-800 mb-3 group-hover:text-rose-600 transition-colors line-clamp-2"
+    >
+      {title}
+    </h3>
+
+    <p class="text-sm text-gray-600 mb-4 line-clamp-2">
+      {task}
+    </p>
+
+    <div class="flex items-center text-xs text-gray-500">
+      <Clock class="w-4 h-4 mr-2" />
+      {when}
+    </div>
+  </div>
+
+  <div class="px-6 pb-6">
+    <div class="w-full bg-gray-200 rounded-full h-2">
+      <div
+        class="bg-gradient-to-r from-rose-400 to-pink-400 h-2 rounded-full transition-all duration-300"
+        style={`width: ${(day / 30) * 100}%`}
+      >
+      </div>
+    </div>
+  </div>
+</a>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
