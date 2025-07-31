@@ -5,6 +5,25 @@
 <script>
   import confetti from 'canvas-confetti';
 
+  // Type declarations
+  interface CompletionTracker {
+    STORAGE_KEY: string;
+    getCompletedDays(): number[];
+    isDayCompleted(dayNumber: number): boolean;
+    markDayCompleted(dayNumber: number): boolean;
+    markDayIncomplete(dayNumber: number): boolean;
+    toggleDayCompletion(dayNumber: number): boolean;
+    getStats(): { completed: number; total: number; percentage: number };
+    updateUI(): void;
+    triggerConfetti(): void;
+  }
+
+  declare global {
+    interface Window {
+      completionTracker: CompletionTracker;
+    }
+  }
+
   // Utility functions for managing completed days in localStorage
   window.completionTracker = {
     STORAGE_KEY: 'intimacy-calendar-completed',
@@ -21,18 +40,18 @@
     },
 
     // Check if a day is completed
-    isDayCompleted(dayNumber) {
+    isDayCompleted(dayNumber: number) {
       const completed = this.getCompletedDays();
       return completed.includes(dayNumber);
     },
 
     // Mark a day as completed
-    markDayCompleted(dayNumber) {
+    markDayCompleted(dayNumber: number) {
       try {
         const completed = this.getCompletedDays();
         if (!completed.includes(dayNumber)) {
           completed.push(dayNumber);
-          completed.sort((a, b) => a - b);
+          completed.sort((a: number, b: number) => a - b);
           localStorage.setItem(this.STORAGE_KEY, JSON.stringify(completed));
           this.updateUI();
           this.triggerConfetti();
@@ -46,7 +65,7 @@
     },
 
     // Mark a day as not completed
-    markDayIncomplete(dayNumber) {
+    markDayIncomplete(dayNumber: number) {
       try {
         const completed = this.getCompletedDays();
         const index = completed.indexOf(dayNumber);
@@ -64,7 +83,7 @@
     },
 
     // Toggle completion status
-    toggleDayCompletion(dayNumber) {
+    toggleDayCompletion(dayNumber: number) {
       return this.isDayCompleted(dayNumber)
         ? this.markDayIncomplete(dayNumber)
         : this.markDayCompleted(dayNumber);
@@ -84,7 +103,8 @@
     updateUI() {
       // Update day cards in calendar
       document.querySelectorAll('[data-day-card]').forEach((card) => {
-        const dayNumber = parseInt(card.dataset.dayCard);
+        const htmlCard = card as HTMLElement;
+        const dayNumber = parseInt(htmlCard.dataset.dayCard || '0');
         const isCompleted = this.isDayCompleted(dayNumber);
 
         // Toggle completed class
@@ -104,8 +124,8 @@
         }
 
         // Update completion indicator
-        const indicator = card.querySelector('[data-completion-indicator]');
-        const time = card.querySelector('[data-completion-time]');
+        const indicator = card.querySelector('[data-completion-indicator]') as HTMLElement;
+        const time = card.querySelector('[data-completion-time]') as HTMLElement;
         if (indicator && time) {
           indicator.style.display = isCompleted ? 'block' : 'none';
           time.style.display = isCompleted ? 'none' : 'block';
@@ -113,9 +133,9 @@
       });
 
       // Update mark as done button
-      const markDoneBtn = document.querySelector('[data-mark-done-btn]');
+      const markDoneBtn = document.querySelector('[data-mark-done-btn]') as HTMLElement;
       if (markDoneBtn) {
-        const dayNumber = parseInt(markDoneBtn.dataset.dayNumber);
+        const dayNumber = parseInt(markDoneBtn.dataset.dayNumber || '0');
         const isCompleted = this.isDayCompleted(dayNumber);
 
         if (isCompleted) {
@@ -130,9 +150,9 @@
       }
 
       // Update completion badge in header
-      const completionBadge = document.querySelector('[data-completion-badge]');
+      const completionBadge = document.querySelector('[data-completion-badge]') as HTMLElement;
       if (completionBadge) {
-        const dayNumber = parseInt(completionBadge.dataset.dayNumber);
+        const dayNumber = parseInt(completionBadge.dataset.dayNumber || '0');
         const isCompleted = this.isDayCompleted(dayNumber);
 
         completionBadge.style.display = isCompleted ? 'inline-flex' : 'none';
