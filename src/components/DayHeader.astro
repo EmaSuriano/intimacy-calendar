@@ -12,15 +12,15 @@ interface Props {
 const { day, title, task, timeRequired, when } = Astro.props;
 ---
 
-<header class="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-gray-100">
-  <div class="flex items-center justify-between mb-6">
-    <div class="flex items-center gap-3">
-      <div class="text-sm font-semibold text-rose-600 bg-rose-100 px-4 py-2 rounded-full">
+<header class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 mb-8 border border-gray-100">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex items-center gap-3 flex-wrap">
+      <div class="text-xs sm:text-sm font-semibold text-rose-600 bg-rose-100 px-3 sm:px-4 py-2 rounded-full whitespace-nowrap">
         Day {day} of 30
       </div>
       <!-- Completion badge -->
       <div
-        class="hidden items-center gap-2 text-sm font-semibold text-green-700 bg-green-100 px-3 py-1 rounded-full"
+        class="hidden items-center gap-2 text-xs sm:text-sm font-semibold text-green-700 bg-green-100 px-3 py-1 rounded-full"
         data-completion-badge
         data-day-number={day}
       >
@@ -28,7 +28,7 @@ const { day, title, task, timeRequired, when } = Astro.props;
         Completed
       </div>
     </div>
-    <div class="w-32 bg-gray-200 rounded-full h-2">
+    <div class="w-full sm:w-32 bg-gray-200 rounded-full h-2">
       <div
         class="bg-gradient-to-r from-rose-400 to-pink-400 h-2 rounded-full"
         style={`width: ${(day / 30) * 100}%`}
@@ -37,28 +37,28 @@ const { day, title, task, timeRequired, when } = Astro.props;
     </div>
   </div>
 
-  <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+  <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
     {title}
   </h1>
 
-  <p class="text-lg text-gray-600 mb-6">
+  <p class="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6">
     {task}
   </p>
 
-  <div class="grid md:grid-cols-2 gap-6">
+  <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
     <div class="flex items-center text-gray-700">
-      <Clock class="w-5 h-5 mr-3 text-rose-500" />
-      <div>
-        <div class="font-semibold">Time Required</div>
-        <div class="text-sm text-gray-600">{timeRequired}</div>
+      <Clock class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0" />
+      <div class="min-w-0">
+        <div class="font-semibold text-sm sm:text-base">Time Required</div>
+        <div class="text-xs sm:text-sm text-gray-600">{timeRequired}</div>
       </div>
     </div>
 
     <div class="flex items-center text-gray-700">
-      <Calendar class="w-5 h-5 mr-3 text-rose-500" />
-      <div>
-        <div class="font-semibold">Best Time</div>
-        <div class="text-sm text-gray-600">{when}</div>
+      <Calendar class="w-5 h-5 mr-3 text-rose-500 flex-shrink-0" />
+      <div class="min-w-0">
+        <div class="font-semibold text-sm sm:text-base">Best Time</div>
+        <div class="text-xs sm:text-sm text-gray-600">{when}</div>
       </div>
     </div>
   </div>

@@ -11,20 +11,21 @@ const sortedDays = allDays.sort((a, b) => a.data.day - b.data.day);
 
 const howToSteps = [
   {
-    iconName: "Calendar" as const,
-    title: "Daily Practice",
-    description: "Dedicate time each day to complete the suggested activity together."
+    iconName: 'Calendar' as const,
+    title: 'Daily Practice',
+    description:
+      'Dedicate time each day to complete the suggested activity together.',
   },
   {
-    iconName: "MessageCircle" as const,
-    title: "Open Communication",
-    description: "Create a safe space for honest, judgment-free conversations."
+    iconName: 'MessageCircle' as const,
+    title: 'Open Communication',
+    description: 'Create a safe space for honest, judgment-free conversations.',
   },
   {
-    iconName: "Heart" as const,
-    title: "Build Connection",
-    description: "Focus on understanding, empathy, and deepening your bond."
-  }
+    iconName: 'Heart' as const,
+    title: 'Build Connection',
+    description: 'Focus on understanding, empathy, and deepening your bond.',
+  },
 ];
 ---
 
@@ -46,4 +47,3 @@ const howToSteps = [
 </Layout>
 
 <CompletionTracker />
-

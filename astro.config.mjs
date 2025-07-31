@@ -6,7 +6,6 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://emasuriano.github.io',
   base: 'intimacy-calendar',
-
   vite: {
     plugins: [tailwindcss()],
   },

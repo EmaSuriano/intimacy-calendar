@@ -3,6 +3,8 @@
 ---
 
 <script>
+  import confetti from 'canvas-confetti';
+
   // Utility functions for managing completed days in localStorage
   window.completionTracker = {
     STORAGE_KEY: 'intimacy-calendar-completed',
@@ -33,6 +35,7 @@
           completed.sort((a, b) => a - b);
           localStorage.setItem(this.STORAGE_KEY, JSON.stringify(completed));
           this.updateUI();
+          this.triggerConfetti();
           return true;
         }
         return false;
@@ -102,8 +105,10 @@
 
         // Update completion indicator
         const indicator = card.querySelector('[data-completion-indicator]');
-        if (indicator) {
+        const time = card.querySelector('[data-completion-time]');
+        if (indicator && time) {
           indicator.style.display = isCompleted ? 'block' : 'none';
+          time.style.display = isCompleted ? 'none' : 'block';
         }
       });
 
@@ -131,6 +136,40 @@
         const isCompleted = this.isDayCompleted(dayNumber);
 
         completionBadge.style.display = isCompleted ? 'inline-flex' : 'none';
+      }
+    },
+
+    // Trigger confetti animation
+    triggerConfetti() {
+      if (typeof confetti !== 'undefined') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#f43f5e', '#ec4899', '#f97316', '#eab308', '#22c55e'],
+        });
+
+        // Second burst with different timing
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ['#f43f5e', '#ec4899', '#f97316', '#eab308', '#22c55e'],
+          });
+        }, 250);
+
+        // Third burst from right
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ['#f43f5e', '#ec4899', '#f97316', '#eab308', '#22c55e'],
+          });
+        }, 400);
       }
     },
   };

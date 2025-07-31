@@ -20,14 +20,6 @@ const cardHref = href || `/intimacy-calendar/day/${slug}`;
   class="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 overflow-hidden relative"
   data-day-card={day}
 >
-  <!-- Completion indicator -->
-  <div
-    class="absolute top-4 right-4 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center z-10 hidden"
-    data-completion-indicator
-  >
-    <Check class="w-5 h-5 m-1.5" />
-  </div>
-
   <div class="p-6 day-card-content">
     <div class="flex items-center justify-between mb-4">
       <div
@@ -35,7 +27,16 @@ const cardHref = href || `/intimacy-calendar/day/${slug}`;
       >
         Day {day}
       </div>
-      <div class="text-xs text-gray-500">
+
+      <!-- Completion indicator -->
+      <div
+        class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center z-10 hidden"
+        data-completion-indicator
+      >
+        <Check class="w-5 h-5 m-1.5" />
+      </div>
+
+      <div class="text-xs text-gray-500 truncate max-w-20" data-completion-time>
         {timeRequired}
       </div>
     </div>
